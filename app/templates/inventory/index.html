@@ -1,8 +1,27 @@
-{% extends 'base.html' %}
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <title>Inventario</title>
+  <style>
+    table {
+      width: 100%;
+      border-collapse: collapse;
+    }
+    th, td {
+      padding: 8px;
+      border: 1px solid #000;
+      text-align: left;
+    }
+    th {
+      background-color: #f2f2f2;
+    }
+  </style>
+</head>
+<body>
 
-{% block content %}
   <h1>Inventario</h1>
-  <table border="1">
+  <table>
     <thead>
       <tr>
         <th>ID</th>
@@ -32,4 +51,6 @@
       {% endfor %}
     </tbody>
   </table>
-{% endblock %}
+
+</body>
+</html>
