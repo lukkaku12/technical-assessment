@@ -1,0 +1,35 @@
+{% extends 'base.html' %}
+
+{% block content %}
+  <h1>Inventario</h1>
+  <table border="1">
+    <thead>
+      <tr>
+        <th>ID</th>
+        <th>Nombre</th>
+        <th>Precio</th>
+        <th>MAC Address</th>
+        <th>Serial</th>
+        <th>Fabricante</th>
+        <th>Descripción</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for item in inventory %}
+        <tr>
+          <td>{{ item.id }}</td>
+          <td>{{ item.name }}</td>
+          <td>{{ item.price }}</td>
+          <td>{{ item.mac_address }}</td>
+          <td>{{ item.serial_number }}</td>
+          <td>{{ item.manufacturer }}</td>
+          <td>{{ item.description }}</td>
+        </tr>
+      {% else %}
+        <tr>
+          <td colspan="7">No hay elementos en el inventario.</td>
+        </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+{% endblock %}
