@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <title>Crear Inventario</title>
+</head>
+<body>
+  <h1>Agregar nuevo item al inventario</h1>
+
+  <form action="/inventory" method="post">
+    <label for="name">Nombre:</label><br>
+    <input type="text" name="name" required><br><br>
+
+    <label for="price">Precio:</label><br>
+    <input type="number" step="0.01" name="price" required><br><br>
+
+    <label for="mac_address">MAC Address:</label><br>
+    <input type="text" name="mac_address" required><br><br>
+
+    <label for="serial_number">Serial:</label><br>
+    <input type="text" name="serial_number" required><br><br>
+
+    <label for="manufacturer">Fabricante:</label><br>
+    <input type="text" name="manufacturer" required><br><br>
+
+    <label for="description">Descripción:</label><br>
+    <textarea name="description" rows="3" required></textarea><br><br>
+
+    <button type="submit">Crear</button>
+  </form>
+</body>
+</html>

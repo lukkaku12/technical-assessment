@@ -4,39 +4,45 @@ from config import db
 from app.services.inventory_service import InventoryService
 from flask import render_template
 
-# Inyección manual de dependencias
+# manual dependency injection
 inventory_service = InventoryService(db, Inventory)
 
+
+def render_create_form():
+    return render_template("inventory/create.html")
+
 def create_inventory():
-    data = request.get_json()
+    data = request.form.to_dict()
     try:
         new_item = inventory_service.create(data)
-        return jsonify(new_item.to_dict()), 201
+        return render_template("inventory/detail.html", item=new_item), 201
     except Exception as e:
-        return jsonify({"error": str(e)}), 400
+        return render_template("inventory/create.html", error=str(e))
 
 
 def get_all_inventory():
     items = inventory_service.get_all()
     return render_template('inventory/index.html', inventory=items)
 
-def get_inventory(item_id):
+def edit_inventory(item_id):
     item = inventory_service.get_one(item_id)
     if item:
-        return jsonify(item.to_dict())
-    return jsonify({"error": "Item not found"}), 404
+        return render_template("inventory/update.html", item=item)
+    else:
+        return jsonify({"error": "Item not found"}), 404
 
 def update_inventory(item_id):
     item = inventory_service.get_one(item_id)
     if not item:
         return jsonify({"error": "Item not found"}), 404
 
-    data = request.get_json()
+    data = request.form.to_dict()
+
     try:
-        updated = inventory_service.update(item, data)
-        return jsonify(updated.to_dict())
+        updated_item = inventory_service.update(item, data)
+        return render_template("inventory/detail.html", item=updated_item)
     except Exception as e:
-        return jsonify({"error": str(e)}), 400
+        return render_template("inventory/update.html", item=item, error=str(e))
 
 def delete_inventory(item_id):
     item = inventory_service.get_one(item_id)

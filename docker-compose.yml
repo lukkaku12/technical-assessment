@@ -7,15 +7,14 @@ services:
     ports:
       - "4000:4000"
     depends_on:
-      - db
-    environment:
-      - DB_HOST=db
-      - DB_PORT=3306
-      - DB_USER=root
-      - DB_PASSWORD=clave123
-      - DB_NAME=mi_basedatos
+      db:
+        condition: service_healthy
+    env_file:
+      - .env
     volumes:
       - .:/app
+    networks:
+      - python
 
   db:
     image: mysql:8.0
@@ -28,6 +27,17 @@ services:
       - "3306:3306"
     volumes:
       - mysql_data:/var/lib/mysql
+    healthcheck:
+      test: ["CMD", "mysqladmin", "ping", "-h", "localhost"]
+      interval: 5s
+      timeout: 3s
+      retries: 5
+    networks:
+      - python
+
+networks:
+  python:
+    driver: bridge
 
 volumes:
   mysql_data:

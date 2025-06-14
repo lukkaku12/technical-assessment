@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <title>Detalle del Inventario</title>
+</head>
+<body>
+  <h1>Item creado exitosamente</h1>
+
+  <ul>
+    <li><strong>ID:</strong> {{ item.id }}</li>
+    <li><strong>Nombre:</strong> {{ item.name }}</li>
+    <li><strong>Precio:</strong> {{ item.price }}</li>
+    <li><strong>MAC Address:</strong> {{ item.mac_address }}</li>
+    <li><strong>Serial:</strong> {{ item.serial_number }}</li>
+    <li><strong>Fabricante:</strong> {{ item.manufacturer }}</li>
+    <li><strong>Descripción:</strong> {{ item.description }}</li>
+  </ul>
+
+  <a href="/inventory">Volver al listado</a>
+</body>
+</html>
