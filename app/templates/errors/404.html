@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ítem no encontrado</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        body {
+            background-color: #f8f9fa;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            padding: 20px;
+        }
+        
+        .error-container {
+            max-width: 600px;
+            width: 100%;
+            background: white;
+            border-radius: 10px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+            padding: 40px;
+            text-align: center;
+            border-top: 5px solid #e74c3c;
+        }
+        
+        .error-icon {
+            font-size: 72px;
+            color: #e74c3c;
+            margin-bottom: 20px;
+        }
+        
+        h1 {
+            color: #333;
+            margin-bottom: 15px;
+            font-size: 28px;
+        }
+        
+        .error-message {
+            color: #6c757d;
+            font-size: 18px;
+            margin-bottom: 30px;
+            line-height: 1.6;
+        }
+        
+        .btn {
+            display: inline-block;
+            padding: 12px 30px;
+            background-color: #3498db;
+            color: white;
+            text-decoration: none;
+            border-radius: 5px;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            border: none;
+            cursor: pointer;
+            font-size: 16px;
+        }
+        
+        .btn:hover {
+            background-color: #2980b9;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+        
+        .btn i {
+            margin-right: 8px;
+        }
+        
+        .additional-info {
+            margin-top: 25px;
+            font-size: 14px;
+            color: #95a5a6;
+        }
+        
+        @media (max-width: 480px) {
+            .error-container {
+                padding: 30px 20px;
+            }
+            
+            h1 {
+                font-size: 24px;
+            }
+            
+            .error-message {
+                font-size: 16px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="error-container">
+        <div class="error-icon">❌</div>
+        <h1>Ítem no encontrado</h1>
+        <p class="error-message">{{ message }}</p>
+        
+        <a href="{{ redirect_url or url_for('inventory.get_all_inventory') }}" class="btn">
+            <i>←</i> Volver al inventario
+        </a>
+        
+        <div class="additional-info">
+            <p>Si crees que esto es un error, por favor contacta al administrador del sistema.</p>
+            <p>Código de error: 404 - Recurso no encontrado</p>
+        </div>
+    </div>
+</body>
+</html>
