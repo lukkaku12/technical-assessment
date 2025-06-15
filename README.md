@@ -102,3 +102,16 @@ python main.py
 ```
 
 > Asegúrate de tener un servidor MySQL corriendo con las mismas credenciales del `.env`
+
+
+## Deployments
+
+He deplegado la aplicación en Render para facilidad si no se desea seguir los pasos anteriores aqui:
+
+https://technical-assessment-scwc.onrender.com
+
+## Diagrama de flujo
+
+Una abstracción de todo el ciclo de la petición del usuario hasta las respuesta al mismo.
+
+![Abstraction](image.png)
