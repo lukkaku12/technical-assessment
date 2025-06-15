@@ -12,23 +12,30 @@ def render_create_form():
 def create_inventory():
     data = request.form.to_dict()
     try:
-        if not data.get('name') or not data.get('quantity'):
-            return render_template(
-                "inventory/create.html",
-                error="Nombre y cantidad son campos obligatorios"
-            ), 400
-            
-        new_item = inventory_service.create(data)
         
-        
-        return render_template("inventory/detail.html", item=new_item), 201
-    except (ValueError, TypeError) as e:
-        return render_template("inventory/create.html", error=str(e)), 400
-    except SQLAlchemyError as e:
-        return render_template("inventory/create.html", error="Error en base de datos"), 500
-    except Exception as e:
-        return render_template("inventory/create.html", error="Error inesperado"), 500
+        required_fields = ['name', 'price', 'mac_address', 'serial_number', 'manufacturer', 'description']
 
+        
+        for field in required_fields:
+            if not data.get(field):
+                return render_template(
+                    "inventory/create.html",
+                    error=f"El campo '{field}' es obligatorio",
+                    data=data
+                ), 400
+
+        
+        new_item = inventory_service.create(data)
+
+        return render_template("inventory/detail.html", item=new_item), 201
+
+    except (ValueError, TypeError) as e:
+        return render_template("inventory/create.html", error=str(e), data=data), 400
+    except SQLAlchemyError:
+        return render_template("inventory/create.html", error="Error en base de datos", data=data), 500
+    except Exception:
+        return render_template("inventory/create.html", error="Error inesperado", data=data), 500
+    
 def get_all_inventory():
     try:
         items = inventory_service.get_all()
@@ -44,7 +51,6 @@ def edit_inventory(item_id):
     try:
         item = inventory_service.get_one(item_id)
         if not item:
-            
             
             return render_template(
                 "errors/404.html",
@@ -72,12 +78,16 @@ def update_inventory(item_id):
             ), 404
         
         data = request.form.to_dict()
-        if not data.get('name') or not data.get('quantity'):
-            return render_template(
-                "inventory/update.html",
-                item=item,
-                error="Nombre y cantidad son campos obligatorios"
-            ), 400
+        required_fields = ['name', 'price', 'mac_address', 'serial_number', 'manufacturer', 'description']
+
+        
+        for field in required_fields:
+            if not data.get(field):
+                return render_template(
+                    "inventory/create.html",
+                    error=f"El campo '{field}' es obligatorio",
+                    data=data
+                ), 400
             
         updated_item = inventory_service.update(item, data)
         
@@ -91,24 +101,30 @@ def delete_inventory(item_id):
     try:
         item = inventory_service.get_one(item_id)
         if not item:
-            return jsonify({
-                "success": False,
-                "message": f"El ítem con ID {item_id} no existe"
-            }), 404
-            
+            return render_template(
+                "errors/404.html",
+                message=f"El ítem con ID {item_id} no existe",
+                redirect_url=url_for('inventory.get_all_inventory')
+            ), 404
+
         inventory_service.delete(item)
-        return jsonify({
-            "success": True,
-            "message": "Ítem eliminado exitosamente",
-            "deleted_id": item_id
-        }), 200
-    except SQLAlchemyError as e:
-        return jsonify({
-            "success": False,
-            "message": "Error de base de datos al eliminar"
-        }), 500
-    except Exception as e:
-        return jsonify({
-            "success": False,
-            "message": "Error inesperado en el servidor"
-        }), 500
+
+        return render_template(
+            "inventory/deleted.html",
+            message=f"Ítem con ID {item_id} eliminado exitosamente.",
+            redirect_url=url_for('inventory.get_all_inventory')
+        ), 200
+
+    except SQLAlchemyError:
+        return render_template(
+            "errors/500.html",
+            message="Error de base de datos al eliminar el ítem.",
+            redirect_url=url_for('inventory.get_all_inventory')
+        ), 500
+
+    except Exception:
+        return render_template(
+            "errors/500.html",
+            message="Error inesperado al intentar eliminar el ítem.",
+            redirect_url=url_for('inventory.get_all_inventory')
+        ), 500

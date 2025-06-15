@@ -112,6 +112,6 @@ https://technical-assessment-scwc.onrender.com
 
 ## Diagrama de flujo
 
-Una abstracción de todo el ciclo de la petición del usuario hasta las respuesta al mismo.
+Una abstracción de todo el ciclo de la petición del usuario hasta la respuesta al mismo.
 
 ![Abstraction](image.png)

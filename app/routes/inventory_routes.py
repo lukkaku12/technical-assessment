@@ -16,7 +16,7 @@ inventory_bp.route('/', methods=['GET'])(inventory_controller.get_all_inventory)
 inventory_bp.route('/edit/<int:item_id>', methods=['GET'])(inventory_controller.edit_inventory)
 
 # Update item (using POST from form)
-inventory_bp.route('/<int:item_id>', methods=['POST'])(inventory_controller.update_inventory)
+inventory_bp.route('/edit/<int:item_id>', methods=['POST'])(inventory_controller.update_inventory)
 
-# Delete item
-inventory_bp.route('/delete/<int:item_id>', methods=['DELETE'])(inventory_controller.delete_inventory)
+# Delete item (using POST from form)
+inventory_bp.route('/delete/<int:item_id>', methods=['POST'])(inventory_controller.delete_inventory)
